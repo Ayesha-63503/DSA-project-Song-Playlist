@@ -101,11 +101,80 @@ void prevSong() {
     playSong(); // play previous
 }
 // Amna Kashif
-class Song{
-	string title;
-	string artist;
-	Song*prev;
-	Song*next;
+class Song {
+public:
+    string title;
+    string artist;
+    Song* next;
+    Song* prev;
+
+    Song(const string& t, const string& a) {
+        title = t;
+        artist = a;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+class PlayList{
+private:
+	Song*head;
+	Song*tail;
 	
-	Song(const title& t,const artist& a)
+public:
+	PlayList(){
+		head=nullptr;
+		tail=nullptr;
+	}
+
+void addSong(const string& artist,const string& title)	{
+	Song*newSong=new Song(title,artist){
+		if(head==nullptr){
+			head=tail=newSong;
+		}else{
+			tail->next=newSong;
+			newSong->prev=tail;
+			tail=newSong;
+		}
+		cout<<"SongAdded:"<<title<<"by"<<Artist<<endl;
+	}
+}
+void deleteSong(const string& title) {
+        if (head == nullptr) {
+            cout << "Playlist is empty!"<<endl;
+            return;
+        }
+
+        Song* temp = head;
+
+        while (temp != nullptr && temp->title != title) {
+            temp = temp->next;
+        }
+
+        if (temp == nullptr) {
+            cout << "Song not found!"<<endl;
+            return;
+        }
+
+
+        if (temp == head) {
+            head = head->next;
+            if (head != nullptr) head->prev = nullptr;
+            else tail = nullptr; 
+        }
+        
+        else if (temp == tail) {
+            tail = tail->prev;
+            if (tail != nullptr) tail->next = nullptr;
+            else head = nullptr; 
+        }
+        
+        else {
+            temp->prev->next = temp->next;
+            temp->next->prev = temp->prev;
+        }
+
+        delete temp;
+        cout << "Song deleted: " << title <<endl;
+    }
 };
