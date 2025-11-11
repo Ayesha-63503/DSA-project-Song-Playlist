@@ -69,7 +69,7 @@ public:
 
 void playSong() {                                                                               //Ayesha Abbasi
     if (!head) { cout << "No songs!\n"; return; } // check if playlist is empty
-    if (!current) current = head; // start from first song if none selected
+    if (!current) current = head; // start from first song if none select
                  
     // Display current song info
     cout << "\n?? Now Playing: " << current->title << " - " << current->artist;
