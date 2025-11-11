@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <vector>            //amna kashif
 #include <fstream>
 #include <cstdlib>                     //Ayesha Abbasi
 #include <ctime>
