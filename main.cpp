@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>            //amna kashif
+#include <vector>            
 #include <fstream>
 #include <cstdlib>                     //Ayesha Abbasi
 #include <ctime>
@@ -100,3 +100,12 @@ void prevSong() {
     else { cout << "Start of playlist!\n"; return; } // no previous song
     playSong(); // play previous
 }
+// Amna Kashif
+class Song{
+	string title;
+	string artist;
+	Song*prev;
+	Song*next;
+	
+	Song(const title& t,const artist& a)
+};
