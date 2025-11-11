@@ -121,6 +121,7 @@ private:
 	Song*head;
 	Song*tail;
 	
+<<<<<<< HEAD
 public:
 	PlayList(){
 		head=nullptr;
@@ -178,3 +179,26 @@ void deleteSong(const string& title) {
         cout << "Song deleted: " << title <<endl;
     }
 };
+=======
+	Song(const title& t,const artist& a)
+};
+void shuffleSongs() {
+    vector<Song*> list;
+    Song* temp = head;
+
+    while (temp != NULL) {
+        list.push_back(temp);
+        temp = temp->next;
+    }
+
+    srand(time(0));
+    for (int i = 0; i < list.size(); i++) {
+        int r = rand() % list.size();
+        swap(list[i]->title, list[r]->title);
+        swap(list[i]->artist, list[r]->artist);
+        swap(list[i]->favorite, list[r]->favorite);
+    }
+
+    cout << "Playlist shuffled!" << endl;
+}
+>>>>>>> 68c78c930086558423a0816b7daefd3928358eb8
