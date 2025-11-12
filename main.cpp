@@ -121,13 +121,13 @@ private:
 	Song*head;
 	Song*tail;
 	
-<<<<<<< HEAD
+
 public:
 	PlayList(){
 		head=nullptr;
 		tail=nullptr;
 	}
-
+// changing
 void addSong(const string& artist,const string& title)	{
 	Song*newSong=new Song(title,artist){
 		if(head==nullptr){
@@ -178,8 +178,45 @@ void deleteSong(const string& title) {
         delete temp;
         cout << "Song deleted: " << title <<endl;
     }
+    // changing 
+    void displayForward() const {
+        if (head == nullptr) {
+            cout << "Playlist is empty!"<<endl;
+            return;
+        }
+
+        cout << "Playlist (Forward):"<<endl;
+        Song* temp = head;
+        while (temp != nullptr) {
+            cout << "Title: " << temp->title << " | Artist: " << temp->artist <<endl;
+            temp = temp->next;
+        }
+    }
+
+    void displayBackward() const {
+        if (tail == nullptr) {
+            cout << "Playlist is empty!"<<endl;
+            return;
+        }
+
+        cout << "Playlist (Backward):"<<endl;
+        Song* temp = tail;
+        while (temp != nullptr) {
+            cout << "Title: " << temp->title << " | Artist: " << temp->artist <<endl;
+            temp = temp->prev;
+        }
+    }
+    
+    ~Playlist() {
+        Song* temp = head;
+        while (temp != nullptr) {
+            Song* next = temp->next;
+            delete temp;
+            temp = next;
+        }
+    }
 };
-=======
+
 	Song(const title& t,const artist& a)
 };
 void shuffleSongs() {
@@ -201,4 +238,3 @@ void shuffleSongs() {
 
     cout << "Playlist shuffled!" << endl;
 }
->>>>>>> 68c78c930086558423a0816b7daefd3928358eb8
