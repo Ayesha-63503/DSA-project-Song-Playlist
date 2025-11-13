@@ -216,6 +216,61 @@ void deleteSong(const string& title) {
         }
     }
 };
+//main function
+#include "Playlist.h"
+
+int main() {
+    Playlist myPlaylist;
+    int choice;
+    string title, artist;
+
+    do {
+        cout << " SONG PLAYLIST MENU "<<endl;
+        cout << "1. Add Song"<<endl;
+        cout << "2. Delete Song"<<endl;
+        cout << "3. Display Playlist (Forward)"<<endl;
+        cout << "4. Display Playlist (Backward)"<<endl;
+        cout << "5. Exit"<<endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); 
+
+        switch (choice) {
+        case 1:
+            cout << "Enter song title: ";
+            getline(cin, title);
+            cout << "Enter artist name: ";
+            getline(cin, artist);
+            myPlaylist.addSong(title, artist);
+            break;
+
+        case 2:
+            cout << "Enter song title to delete: ";
+            getline(cin, title);
+            myPlaylist.deleteSong(title);
+            break;
+
+        case 3:
+            myPlaylist.displayForward();
+            break;
+
+        case 4:
+            myPlaylist.displayBackward();
+            break;
+
+        case 5:
+            cout << "🎧 Exiting Playlist Simulation. Bye!"<<endl;
+            break;
+
+        default:
+            cout << "Invalid choice! Try again."<<endl;
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
+
 
 	Song(const title& t,const artist& a)
 };
