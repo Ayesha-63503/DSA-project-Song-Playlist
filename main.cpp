@@ -128,7 +128,7 @@ void shuffleSongs() {
 
     cout << "Playlist shuffled!" << endl;
 }
-void setRepeatMode() {
+void setRepeatMode() {   //bareera amjad
     int choice;
     cout << "Choose repeat mode:" << endl;
     cout << "1. Repeat One" << endl;
@@ -150,3 +150,4 @@ void setRepeatMode() {
         cout << "Repeat mode turned Off" << endl;
     }
 }
+
