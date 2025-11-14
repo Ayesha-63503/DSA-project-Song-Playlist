@@ -128,3 +128,25 @@ void shuffleSongs() {
 
     cout << "Playlist shuffled!" << endl;
 }
+void setRepeatMode() {
+    int choice;
+    cout << "Choose repeat mode:" << endl;
+    cout << "1. Repeat One" << endl;
+    cout << "2. Repeat All" << endl;
+    cout << "3. Off" << endl;
+    cout << "Enter your choice (1-3): " << endl;
+    cin >> choice;
+
+    if (choice == 1) {
+        repeatMode = 1;
+        cout << "Repeat mode set to: One" << endl;
+    } 
+    else if (choice == 2) {
+        repeatMode = 2;
+        cout << "Repeat mode set to: All" << endl;
+    } 
+    else {
+        repeatMode = 0;
+        cout << "Repeat mode turned Off" << endl;
+    }
+}
