@@ -8,52 +8,49 @@
 #include <ctime>
 
 using namespace std;
-class RecentlyPlayed {
-    Song* head;             //Bareera Amjad
+class RecentlyPlayed {   //Bareera Amjad
+    Song* head;
     int count;
 
 public:
     RecentlyPlayed() {
-        head = nullptr;
+        head = NULL;
         count = 0;
     }
 
-    void addRecent(string title, string artist) {
-        Song* song = new Song(title, artist);
-        song->next = head;
-        head = song;
+    void add(const string& title, const string& artist) {
+        Song* s = new Song(title, artist);
+        s->next = head;
+        head = s;
         count++;
 
         if (count > 5) {
-            Song* temp = head;
-            Song* prev = nullptr;
+            Song* t = head;
+            Song* prev = NULL;
             int c = 1;
-            while (temp && c < 5) {
-                prev = temp;
-                temp = temp->next;
+            while (t && c < 5) {
+                prev = t;
+                t = t->next;
                 c++;
             }
-            if (temp && prev) {
-                prev->next = nullptr;
-                delete temp;
-                count = 5;
-            }
+            if (prev) prev->next = NULL;
+            delete t;
+            count = 5;
         }
     }
 
-    void showRecent() {
-        if (head == nullptr) {
-            cout << endl << "No songs have been played recently!" << endl;
+    void show() {
+        if (!head) {
+            cout << "No songs played recently." << endl;
             return;
         }
-
-        cout << endl << "Recently Played Songs:" << endl;
-        Song* current = head;
-        int index = 1;
-
-        while (current != nullptr) {
-            cout << index++ << "." << current->title << "—" << current->artist << endl;
-            current = current->next;
+        cout << "Recently Played:" << endl;
+        Song* t = head;
+        int i = 1;
+        while (t) {
+            cout << i << ". " << t->title << " - " << t->artist << endl;
+            t = t->next;
+            i++;
         }
     }
 };
