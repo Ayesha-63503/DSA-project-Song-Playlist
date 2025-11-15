@@ -79,6 +79,23 @@ void toggleFavorite(const string& title) {
     }
     cout << endl;
 }
+void shuffleSongs() {
+        vector<Song*> arr;
+        for (Song* t = head; t; t = t->next) arr.push_back(t);
+        if (arr.empty()) {
+            cout << "Playlist is empty." << endl;
+            return;
+        }
+        srand((unsigned)time(0));
+        for (int i = 0; i < (int)arr.size(); i++) {
+            int r = rand() % arr.size();
+            swap(arr[i]->title, arr[r]->title);
+            swap(arr[i]->artist, arr[r]->artist);
+            swap(arr[i]->favorite, arr[r]->favorite);
+        }
+        cout << "Playlist shuffled." << endl;
+    }
+
 
 void playSong() {                                                                               //Ayesha Abbasi
     if (!head) { cout << "No songs!\n"; return; } // check if playlist is empty
