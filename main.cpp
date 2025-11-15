@@ -56,6 +56,20 @@ public:
         }
     }
 };
+
+//Bareera Amjad
+void toggleFavorite(const string& title) {
+        Song* t = head;
+        while (t && t->title != title) t = t->next;
+        if (!t) {
+            cout << "Song not found." << endl;
+            return;
+        }
+        t->favorite = !t->favorite;
+        if (t->favorite) cout << "Added to favorites." << endl;
+        else cout << "Removed from favorites." << endl;
+    }
+
  void simulatePlay() {
     cout << "Playing ";
     for (int i = 0; i < 10; i++) {
