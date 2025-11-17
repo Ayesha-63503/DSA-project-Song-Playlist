@@ -101,6 +101,7 @@ void prevSong() {
     playSong(); // play previous
 }
 // Amna Kashif
+//module 3,4,5 [playlist data, add/delete, display]
 class Song {
 public:
     string title;
@@ -140,12 +141,13 @@ void addSong(const string& artist,const string& title)	{
 		cout<<"SongAdded:"<<title<<"by"<<Artist<<endl;
 	}
 }
+// delete song
 void deleteSong(const string& title) {
         if (head == nullptr) {
             cout << "Playlist is empty!"<<endl;
             return;
         }
-
+//changing
         Song* temp = head;
 
         while (temp != nullptr && temp->title != title) {
