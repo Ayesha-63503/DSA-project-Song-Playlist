@@ -107,11 +107,11 @@ void playSong() {                                                               
     cout << endl;
 
     simulatePlay(); // simulate playback animation
-    recent.addRecent(current->title, current->artist); // add song to recent list
+    recent.addRecent(current->title, current->artist);                // add song to recent list
 
     // Handle repeat and auto-next logic
     if (repeatMode == 1) playSong(); // repeat current
-    else if (current->next) current = current->next; // go to next
+    else if (current->next) current = current->next;         // go to next
     else if (repeatMode == 2) current = head; // loop to start
 }
 
@@ -119,7 +119,7 @@ void nextSong() {
     if (!head) return;
     if (!current) current = head;
     if (current->next) current = current->next;
-    else { cout << "End of playlist!\n"; return; } // no next song
+    else { cout << "End of playlist!\n"; return; }                // no next song
     playSong(); // play next
 }
 
@@ -127,9 +127,56 @@ void prevSong() {
     if (!head) return;
     if (!current) current = head;
     if (current->prev) current = current->prev;
-    else { cout << "Start of playlist!\n"; return; } // no previous song
+    else { cout << "Start of playlist!\n"; return; }               // no previous song
     playSong(); // play previous
 }
+ 
+                                  // Searches for songs by title or artist keyword                               //Ayesha Abbasi
+void search(const string& key) {                                                                                   
+    if (!head) {  
+        cout << "Playlist is empty." << endl;                             // No songs available  
+        return;  
+    }
+    
+    Song* t = head;  
+    bool found = false;  
+ 
+    while (t) {                                                                   // Traverse playlist to find matching songs 
+         
+        if (t->title.find(key) != string::npos || t->artist.find(key) != string::npos) {              // Match keyword with title OR artist  
+            cout << t->title << " - " << t->artist << endl;  // Print match  
+            found = true;  
+        }
+        t = t->next;                                                  // Move to next song  
+    }
+
+    if (!found) cout << "No matches found." << endl;  // No result  
+}
+
+                                             
+void edit(const string& oldTitle) {           // Edits the title and artist of a specific song                  
+    Song* t = head;  
+
+    // Find the song with given title  
+    while (t && t->title != oldTitle) t = t->next;  
+
+    if (!t) {  
+        cout << "Song not found." << endl;  // Target not found  
+        return;  
+    }
+
+     
+    cout << "New title:" << endl;              // Get updated title  
+    getline(cin, t->title);
+
+    // Get updated artist  
+    cout << "New artist:" << endl;      // Get updated artist
+    getline(cin, t->artist);
+
+    cout << "Updated." << endl;       // Confirmation message  
+}
+
+
 // Amna Kashif
 class Song {
 public:
@@ -246,6 +293,21 @@ void deleteSong(const string& title) {
         }
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //main function
 #include "Playlist.h"
 
