@@ -9,54 +9,67 @@
 
 using namespace std;
 class RecentlyPlayed {
-    Song* head;             //Bareera Amjad
+    Song* head;
     int count;
 
 public:
     RecentlyPlayed() {
-        head = nullptr;
+        head = NULL;
         count = 0;
     }
 
-    void addRecent(string title, string artist) {
-        Song* song = new Song(title, artist);
-        song->next = head;
-        head = song;
+    // ===== RecentlyPlayed Module: add() =====
+    void add(const string& title, const string& artist) {
+        Song* s = new Song(title, artist);
+        s->next = head;
+        head = s;
         count++;
 
         if (count > 5) {
-            Song* temp = head;
-            Song* prev = nullptr;
+            Song* t = head;
+            Song* prev = NULL;
             int c = 1;
-            while (temp && c < 5) {
-                prev = temp;
-                temp = temp->next;
+            while (t && c < 5) {
+                prev = t;
+                t = t->next;
                 c++;
             }
-            if (temp && prev) {
-                prev->next = nullptr;
-                delete temp;
-                count = 5;
-            }
+            if (prev) prev->next = NULL;
+            delete t;
+            count = 5;
         }
     }
 
-    void showRecent() {
-        if (head == nullptr) {
-            cout << endl << "No songs have been played recently!" << endl;
+    // ===== RecentlyPlayed Module: show() =====
+    void show() {
+        if (!head) {
+            cout << "No songs played recently." << endl;
             return;
         }
-
-        cout << endl << "Recently Played Songs:" << endl;
-        Song* current = head;
-        int index = 1;
-
-        while (current != nullptr) {
-            cout << index++ << "." << current->title << "—" << current->artist << endl;
-            current = current->next;
+        cout << "Recently Played:" << endl;
+        Song* t = head;
+        int i = 1;
+        while (t) {
+            cout << i << ". " << t->title << " - " << t->artist << endl;
+            t = t->next;
+            i++;
         }
     }
 };
+
+//Bareera Amjad
+void toggleFavorite(const string& title) {
+        Song* t = head;
+        while (t && t->title != title) t = t->next;
+        if (!t) {
+            cout << "Song not found." << endl;
+            return;
+        }
+        t->favorite = !t->favorite;
+        if (t->favorite) cout << "Added to favorites." << endl;
+        else cout << "Removed from favorites." << endl;
+    }
+
  void simulatePlay() {
     cout << "Playing ";
     for (int i = 0; i < 10; i++) {
@@ -66,6 +79,23 @@ public:
     }
     cout << endl;
 }
+void shuffleSongs() {
+        vector<Song*> arr;
+        for (Song* t = head; t; t = t->next) arr.push_back(t);
+        if (arr.empty()) {
+            cout << "Playlist is empty." << endl;
+            return;
+        }
+        srand((unsigned)time(0));
+        for (int i = 0; i < (int)arr.size(); i++) {
+            int r = rand() % arr.size();
+            swap(arr[i]->title, arr[r]->title);
+            swap(arr[i]->artist, arr[r]->artist);
+            swap(arr[i]->favorite, arr[r]->favorite);
+        }
+        cout << "Playlist shuffled." << endl;
+    }
+
 
 void playSong() {                                                                               //Ayesha Abbasi
     if (!head) { cout << "No songs!\n"; return; } // check if playlist is empty
@@ -295,3 +325,27 @@ void shuffleSongs() {
 
     cout << "Playlist shuffled!" << endl;
 }
+//increment
+void setRepeatMode() {   //bareera amjad
+    int choice;
+    cout << "Choose repeat mode:" << endl;
+    cout << "1. Repeat One" << endl;
+    cout << "2. Repeat All" << endl;
+    cout << "3. Off" << endl;
+    cout << "Enter your choice (1-3): " << endl;
+    cin >> choice;
+
+    if (choice == 1) {
+        repeatMode = 1;
+        cout << "Repeat mode set to: One" << endl;
+    } 
+    else if (choice == 2) {
+        repeatMode = 2;
+        cout << "Repeat mode set to: All" << endl;
+    } 
+    else {
+        repeatMode = 0;
+        cout << "Repeat mode turned Off" << endl;
+    }
+}
+
