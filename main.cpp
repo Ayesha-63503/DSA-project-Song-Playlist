@@ -147,11 +147,6 @@ public:
     }
 };
 
-
-
-
-	Song(const title& t,const artist& a)
-};
 void shuffleSongs() {
     vector<Song*> list;
     Song* temp = head;
