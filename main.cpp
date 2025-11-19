@@ -237,3 +237,24 @@ void setRepeatMode() {   //bareera amjad
     }
 }
 
+// amna kashif
+class Playlist {
+private:
+    Song* head;
+    Song* tail;
+
+public:
+    Playlist() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    ~Playlist() {
+        Song* temp = head;
+        while (temp != nullptr) {
+            Song* next = temp->next;
+            delete temp;
+            temp = next;
+        }
+    }
+};
