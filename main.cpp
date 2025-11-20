@@ -8,6 +8,23 @@
 #include <ctime>
 
 using namespace std;
+
+struct Song {                  //Muqaddisa Rashid
+    string title;
+    string artist;
+    bool favorite;
+    Song* next;
+    Song* prev;
+
+    Song(string t = "", string a = "") {              //Constructor
+        title = t;
+        artist = a;
+        favorite = false;
+        next = NULL;
+        prev = NULL;
+    }
+};
+
 class RecentlyPlayed {
     Song* head;
     int count;
@@ -178,7 +195,6 @@ void edit(const string& oldTitle) {           // Edits the title and artist of a
 
 
 // Amna Kashif
-//module 3,4,5 [playlist data, add/delete, display]
 class Song {
 public:
     string title;
