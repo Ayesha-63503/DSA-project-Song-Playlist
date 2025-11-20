@@ -178,21 +178,22 @@ void edit(const string& oldTitle) {           // Edits the title and artist of a
 
 
 // Amna Kashif
-//module 3,4,5 [playlist data, add/delete, display]
-class Song {
-public:
-    string title;
-    string artist;
-    Song* next;
-    Song* prev;
+class Playlist {
+    string name;
+    Song* head;
+    Song* tail;
+    Song* current;
+    int repeatMode; // 0 = Off, 1 = Repeat One, 2 = Repeat All
+    RecentlyPlayed recent;
 
-    Song(const string& t, const string& a) {
-        title = t;
-        artist = a;
-        next = nullptr;
-        prev = nullptr;
+public:
+     //constructor
+    Playlist(string n = "My Playlist") {
+        name = n;
+        head = tail = current = NULL;
+        repeatMode = 0;
     }
-};
+
 
 void shuffleSongs() {
     vector<Song*> list;
@@ -238,23 +239,20 @@ void setRepeatMode() {   //bareera amjad
 }
 
 // amna kashif
-class Playlist {
-private:
-    Song* head;
-    Song* tail;
-
-public:
-    Playlist() {
-        head = nullptr;
-        tail = nullptr;
+// getName()
+    string getName() {
+        return name;
     }
-
-    ~Playlist() {
-        Song* temp = head;
-        while (temp != nullptr) {
-            Song* next = temp->next;
-            delete temp;
-            temp = next;
+    
+    // amna kashif
+    //  addSong()
+    void addSong(const string& title, const string& artist) {
+        Song* s = new Song(title, artist);
+        if (!head) head = tail = s;
+        else {
+            tail->next = s;
+            s->prev = tail;
+            tail = s;
         }
+        cout << "Added: " << title << endl;
     }
-};
