@@ -256,3 +256,33 @@ void setRepeatMode() {   //bareera amjad
         }
         cout << "Added: " << title << endl;
     }
+// amna kashif 
+// delete song function
+void deleteSong(const string& title) {        // Start deleting a track from playlist
+        Song* t = head;                       // Begin from the first track
+        while (t && t->title != title)     
+            t = t->next;                      //Move to the next track
+
+        if (!t) {                             // ❗ Track not found in playlist
+            cout << "Song not found." << endl;
+            return;                         
+        }
+
+        if (t == head)                      
+            head = t->next;                   
+
+        if (t == tail)                        // 🎶 If the track is the last one
+            tail = t->prev;                   // 👈 Move playlist tail backward
+
+        if (t->prev)                          // 🔗 Connect previous track to next track
+            t->prev->next = t->next;
+
+        if (t->next)                          // 🔗 Connect next track to previous track
+            t->next->prev = t->prev;
+
+        if (t == current)                    
+            current = head;                   // 🔁 Restart from first track
+
+        delete t;                             
+        cout << "Song deleted." << endl;      // ✔️ Deletion complete
+}
