@@ -8,6 +8,21 @@
 #include <ctime>
 
 using namespace std;
+struct Song {    //structutr 
+    string title;
+    string artist;
+    bool favorite;
+    Song* next;
+    Song* prev;
+                                                //muqaddisa
+    Song(string t = "", string a = "") {          // constructor 
+        title = t;
+        artist = a;
+        favorite = false;
+        next = NULL;
+        prev = NULL;
+    }
+};
 class RecentlyPlayed {
     Song* head;
     int count;
