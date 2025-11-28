@@ -2,12 +2,31 @@
 
 #include <iostream>
 #include <string>
-#include <vector>            
+#include <vector>            // amna kashif
 #include <fstream>
 #include <cstdlib>                     //Ayesha Abbasi
 #include <ctime>
+
 // bareera amjad 
+
 using namespace std;
+ struct Song {    //structutr  //Muqaddisa Rashid
+    string title;
+    string artist;
+    bool favorite;
+    Song* next;
+    Song* prev;
+   //muqaddisa
+
+  Song(string t = "", string a = "") {          // constructor  
+
+        title = t;
+        artist = a;
+        favorite = false;
+        next = NULL;
+        prev = NULL;
+    }
+};
 class RecentlyPlayed {
     Song* head;
     int count;
@@ -107,11 +126,11 @@ void playSong() {                                                               
     cout << endl;
 
     simulatePlay(); // simulate playback animation
-    recent.addRecent(current->title, current->artist); // add song to recent list
+    recent.addRecent(current->title, current->artist);                // add song to recent list
 
     // Handle repeat and auto-next logic
     if (repeatMode == 1) playSong(); // repeat current
-    else if (current->next) current = current->next; // go to next
+    else if (current->next) current = current->next;         // go to next
     else if (repeatMode == 2) current = head; // loop to start
 }
 
@@ -119,7 +138,7 @@ void nextSong() {
     if (!head) return;
     if (!current) current = head;
     if (current->next) current = current->next;
-    else { cout << "End of playlist!\n"; return; } // no next song
+    else { cout << "End of playlist!\n"; return; }                // no next song
     playSong(); // play next
 }
 
@@ -127,10 +146,58 @@ void prevSong() {
     if (!head) return;
     if (!current) current = head;
     if (current->prev) current = current->prev;
-    else { cout << "Start of playlist!\n"; return; } // no previous song
+    else { cout << "Start of playlist!\n"; return; }               // no previous song
     playSong(); // play previous
 }
+ 
+    // Searches for songs by title or artist keyword                               //Ayesha Abbasi
+void search(const string& key) {                                                                                   
+    if (!head) {  
+        cout << "Playlist is empty." << endl;                             // No songs available  
+        return;  
+    }
+    
+    Song* t = head;  
+    bool found = false;  
+ 
+    while (t) {                                                                   // Traverse playlist to find matching songs 
+         
+        if (t->title.find(key) != string::npos || t->artist.find(key) != string::npos) {              // Match keyword with title OR artist  
+            cout << t->title << " - " << t->artist << endl;  // Print match  
+            found = true;  
+        }
+        t = t->next;                                                  // Move to next song  
+    }
+
+    if (!found) cout << "No matches found." << endl;  // No result  
+}
+
+                                             
+void edit(const string& oldTitle) {           // Edits the title and artist of a specific song                  
+    Song* t = head;  
+
+    // Find the song with given title  
+    while (t && t->title != oldTitle) t = t->next;  
+
+    if (!t) {  
+        cout << "Song not found." << endl;  // Target not found  
+        return;  
+    }
+
+     
+    cout << "New title:" << endl;              // Get updated title  
+    getline(cin, t->title);
+
+    // Get updated artist  
+    cout << "New artist:" << endl;      // Get updated artist
+    getline(cin, t->artist);
+
+    cout << "Updated." << endl;       // Confirmation message  
+}
+
+
 // Amna Kashif
+
 class Song {
 public:
     string title;
@@ -138,172 +205,22 @@ public:
     Song* next;
     Song* prev;
 
-    Song(const string& t, const string& a) {
-        title = t;
-        artist = a;
-        next = nullptr;
-        prev = nullptr;
-    }
-};
-
-class PlayList{
-private:
-	Song*head;
-	Song*tail;
-	
-
+class Playlist {
+    string name;
+    Song* head;
+    Song* tail;
+    Song* current;
+    int repeatMode; // 0 = Off, 1 = Repeat One, 2 = Repeat All
+    RecentlyPlayed recent;
 public:
-	PlayList(){
-		head=nullptr;
-		tail=nullptr;
-	}
-// changing
-void addSong(const string& artist,const string& title)	{
-	Song*newSong=new Song(title,artist){
-		if(head==nullptr){
-			head=tail=newSong;
-		}else{
-			tail->next=newSong;
-			newSong->prev=tail;
-			tail=newSong;
-		}
-		cout<<"SongAdded:"<<title<<"by"<<Artist<<endl;
-	}
-}
-void deleteSong(const string& title) {
-        if (head == nullptr) {
-            cout << "Playlist is empty!"<<endl;
-            return;
-        }
-
-        Song* temp = head;
-
-        while (temp != nullptr && temp->title != title) {
-            temp = temp->next;
-        }
-
-        if (temp == nullptr) {
-            cout << "Song not found!"<<endl;
-            return;
-        }
-
-
-        if (temp == head) {
-            head = head->next;
-            if (head != nullptr) head->prev = nullptr;
-            else tail = nullptr; 
-        }
-        
-        else if (temp == tail) {
-            tail = tail->prev;
-            if (tail != nullptr) tail->next = nullptr;
-            else head = nullptr; 
-        }
-        
-        else {
-            temp->prev->next = temp->next;
-            temp->next->prev = temp->prev;
-        }
-
-        delete temp;
-        cout << "Song deleted: " << title <<endl;
-    }
-    // changing 
-    void displayForward() const {
-        if (head == nullptr) {
-            cout << "Playlist is empty!"<<endl;
-            return;
-        }
-
-        cout << "Playlist (Forward):"<<endl;
-        Song* temp = head;
-        while (temp != nullptr) {
-            cout << "Title: " << temp->title << " | Artist: " << temp->artist <<endl;
-            temp = temp->next;
-        }
+     //constructor
+    Playlist(string n = "My Playlist") {
+        name = n;
+        head = tail = current = NULL;
+        repeatMode = 0;
     }
 
-    void displayBackward() const {
-        if (tail == nullptr) {
-            cout << "Playlist is empty!"<<endl;
-            return;
-        }
 
-        cout << "Playlist (Backward):"<<endl;
-        Song* temp = tail;
-        while (temp != nullptr) {
-            cout << "Title: " << temp->title << " | Artist: " << temp->artist <<endl;
-            temp = temp->prev;
-        }
-    }
-    
-    ~Playlist() {
-        Song* temp = head;
-        while (temp != nullptr) {
-            Song* next = temp->next;
-            delete temp;
-            temp = next;
-        }
-    }
-};
-//main function
-#include "Playlist.h"
-
-int main() {
-    Playlist myPlaylist;
-    int choice;
-    string title, artist;
-
-    do {
-        cout << " SONG PLAYLIST MENU "<<endl;
-        cout << "1. Add Song"<<endl;
-        cout << "2. Delete Song"<<endl;
-        cout << "3. Display Playlist (Forward)"<<endl;
-        cout << "4. Display Playlist (Backward)"<<endl;
-        cout << "5. Exit"<<endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
-        cin.ignore(); 
-
-        switch (choice) {
-        case 1:
-            cout << "Enter song title: ";
-            getline(cin, title);
-            cout << "Enter artist name: ";
-            getline(cin, artist);
-            myPlaylist.addSong(title, artist);
-            break;
-
-        case 2:
-            cout << "Enter song title to delete: ";
-            getline(cin, title);
-            myPlaylist.deleteSong(title);
-            break;
-
-        case 3:
-            myPlaylist.displayForward();
-            break;
-
-        case 4:
-            myPlaylist.displayBackward();
-            break;
-
-        case 5:
-            cout << "🎧 Exiting Playlist Simulation. Bye!"<<endl;
-            break;
-
-        default:
-            cout << "Invalid choice! Try again."<<endl;
-        }
-
-    } while (choice != 5);
-
-    return 0;
-}
-
-
-	Song(const title& t,const artist& a)
-};
 void shuffleSongs() {
     vector<Song*> list;
     Song* temp = head;
@@ -347,3 +264,138 @@ void setRepeatMode() {   //bareera amjad
     }
 }
 
+// amna kashif
+// getName()
+    string getName() {
+        return name;
+    }
+    
+    // amna kashif
+    //  addSong()
+    void addSong(const string& title, const string& artist) {
+        Song* s = new Song(title, artist);
+        if (!head) head = tail = s;
+        else {
+            tail->next = s;
+            s->prev = tail;
+            tail = s;
+        }
+        cout << "Added: " << title << endl;
+    }
+// amna kashif 
+// delete song function
+void deleteSong(const string& title) {        // Start deleting a track from playlist
+        Song* t = head;                       // Begin from the first track
+        while (t && t->title != title)     
+            t = t->next;                      //Move to the next track
+
+        if (!t) {                             // ❗ Track not found in playlist
+            cout << "Song not found." << endl;
+            return;                         
+        }
+
+        if (t == head)                      
+            head = t->next;                   
+
+        if (t == tail)                        // 🎶 If the track is the last one
+            tail = t->prev;                   // 👈 Move playlist tail backward
+
+        if (t->prev)                          // 🔗 Connect previous track to next track
+            t->prev->next = t->next;
+
+        if (t->next)                          // 🔗 Connect next track to previous track
+            t->next->prev = t->prev;
+
+        if (t == current)                    
+            current = head;                   // 🔁 Restart from first track
+
+        delete t;                             
+        cout << "Song deleted." << endl;      // ✔️ Deletion complete
+}
+//muqaddisa 
+class PlaylistManager {
+    vector<Playlist> playlists; // list of all playlists
+    int currentIndex;            // index of the active playlist
+
+public:
+    //  Constructor 
+    PlaylistManager() {
+        playlists.push_back(Playlist("Default")); // default playlist
+        currentIndex = 0;
+    }
+
+    //Get current playlist
+    Playlist& current() {
+        return playlists[currentIndex];
+    }
+
+    // Create a new playlist
+    void createPlaylist() {
+        string name;
+        cout << "Enter new playlist name:" << endl;
+        getline(cin, name);
+        playlists.push_back(Playlist(name));
+        currentIndex = playlists.size() - 1; // switch to new playlist
+        cout << "Created and switched to: " << name << endl;
+    }
+
+    //Switch to existing playlist 
+    void switchPlaylist() {
+        if (playlists.empty()) {
+            cout << "No playlists available." << endl;
+            return;
+        }
+
+        cout << "Available Playlists:" << endl;
+        for (int i = 0; i < playlists.size(); i++) {
+            cout << (i + 1) << ". " << playlists[i].getName() << endl;
+        }
+
+        int choice;
+        cout << "Enter playlist number to switch:" << endl;
+        cin >> choice;
+        cin.ignore();
+
+        if (choice >= 1 && choice <= playlists.size()) {
+            currentIndex = choice - 1;
+            cout << "Switched to playlist: " << playlists[currentIndex].getName() << endl;
+        } else {
+            cout << "Invalid selection." << endl;
+        }
+    }
+
+    //  Delete a playlist 
+    void deletePlaylist() {
+        if (playlists.size() <= 1) {
+            cout << "Cannot delete the only playlist." << endl;
+            return;
+        }
+
+        cout << "Select playlist to delete:" << endl;
+        for (int i = 0; i < playlists.size(); i++) {
+            cout << (i + 1) << ". " << playlists[i].getName() << endl;
+        }
+
+        int choice;
+        cin >> choice;
+        cin.ignore();
+
+        if (choice >= 1 && choice <= playlists.size()) {
+            playlists.erase(playlists.begin() + (choice - 1));
+            currentIndex = 0; // reset to default
+            cout << "Playlist deleted. Switched to: " << playlists[currentIndex].getName() << endl;
+        } else {
+            cout << "Invalid selection." << endl;
+        }
+    }
+
+    // Show all playlists
+    void showAllPlaylists() {
+        cout << "All Playlists:" << endl;
+        for (int i = 0; i < playlists.size(); i++) {
+            cout << (i + 1) << ". " << playlists[i].getName();
+            if (i == currentIndex) cout << " (Current)";
+            cout << endl;
+        }
+    }
+};
