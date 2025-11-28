@@ -18,7 +18,6 @@ public:
         count = 0;
     }
 
-    // ===== RecentlyPlayed Module: add() =====
     void add(const string& title, const string& artist) {
         Song* s = new Song(title, artist);
         s->next = head;
@@ -40,7 +39,7 @@ public:
         }
     }
 
-    // ===== RecentlyPlayed Module: show() =====
+
     void show() {
         if (!head) {
             cout << "No songs played recently." << endl;
