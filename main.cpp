@@ -6,7 +6,7 @@
 #include <fstream>
 #include <cstdlib>                     //Ayesha Abbasi
 #include <ctime>
-
+// bareera amjad 
 using namespace std;
 class RecentlyPlayed {
     Song* head;
@@ -79,6 +79,7 @@ void toggleFavorite(const string& title) {
     }
     cout << endl;
 }
+//increment to shuffling of songs
 void shuffleSongs() {
         vector<Song*> arr;
         for (Song* t = head; t; t = t->next) arr.push_back(t);
