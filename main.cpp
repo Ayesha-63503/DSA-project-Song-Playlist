@@ -240,6 +240,17 @@ void shuffleSongs() {
 
     cout << "Playlist shuffled!" << endl;
 }
+
+
+                               // Ayesha Abbasi
+                              // recently played songs 
+    void showRecent() {
+        recent.show();
+    }
+
+
+
+
 //increment
 void setRepeatMode() {   //bareera amjad
     int choice;
