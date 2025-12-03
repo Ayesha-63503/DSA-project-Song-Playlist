@@ -5,6 +5,9 @@
 #include <fstream>
 #include <cstdlib>                     //Ayesha Abbasi
 #include <ctime>
+#include <thread>
+#include <chrono>
+
 // bareera amjad 
 using namespace std;
  struct Song {    //structutr  //Muqaddisa Rashid
@@ -128,18 +131,6 @@ void deleteSong(const string& title) {        // Start deleting a track from pla
 }
 
 
-//Bareera Amjad
-void toggleFavorite(const string& title) {
-        Song* t = head;
-        while (t && t->title != title) t = t->next;
-        if (!t) {
-            cout << "Song not found." << endl;
-            return;
-        }
-        t->favorite = !t->favorite;
-        if (t->favorite) cout << "Added to favorites." << endl;
-        else cout << "Removed from favorites." << endl;
-    }
 
  void simulatePlay() {
     cout << "Playing ";
@@ -150,24 +141,6 @@ void toggleFavorite(const string& title) {
     }
     cout << endl;
 }
-//increment to shuffling of songs
-void shuffleSongs() {
-        vector<Song*> arr;
-        for (Song* t = head; t; t = t->next) arr.push_back(t);
-        if (arr.empty()) {
-            cout << "Playlist is empty." << endl;
-            return;
-        }
-        srand((unsigned)time(0));
-        for (int i = 0; i < (int)arr.size(); i++) {
-            int r = rand() % arr.size();
-            swap(arr[i]->title, arr[r]->title);
-            swap(arr[i]->artist, arr[r]->artist);
-            swap(arr[i]->favorite, arr[r]->favorite);
-        }
-        cout << "Playlist shuffled." << endl;
-    }
-
 
 void playSong() {                                                                               //Ayesha Abbasi
     if (!head) { cout << "No songs!\n"; return; } // check if playlist is empty
@@ -203,6 +176,54 @@ void prevSong() {
     playSong(); // play previous
 }
  
+    
+
+// Amna Kashif
+
+                               // Ayesha Abbasi
+                              // recently played songs 
+
+// amna kashif 
+
+ void showSongs(bool onlyFav = false) {
+        if (!head) {
+            cout << "Playlist is empty." << endl;
+            return;
+        }
+        cout << name << ":" << endl;
+        Song* t = head;
+        int i = 1;
+        while (t) {
+            if (!onlyFav || t->favorite) {
+                cout << i << ". " << t->title << " - " << t->artist;
+                if (t->favorite) cout << " (Fav)";
+                if (t == current) cout << " (Playing)";
+                cout << endl;
+            }
+            t = t->next;
+            i++;
+        }
+    }
+    //increment to shuffling of songs
+//bareera amjad
+void shuffleSongs() {
+        vector<Song*> arr;
+        for (Song* t = head; t; t = t->next) arr.push_back(t);
+        if (arr.empty()) {
+            cout << "Playlist is empty." << endl;
+            return;
+        }
+        srand((unsigned)time(0));
+        for (int i = 0; i < (int)arr.size(); i++) {
+            int r = rand() % arr.size();
+            swap(arr[i]->title, arr[r]->title);
+            swap(arr[i]->artist, arr[r]->artist);
+            swap(arr[i]->favorite, arr[r]->favorite);
+        }
+        cout << "Playlist shuffled." << endl;
+    }
+
+
     // Searches for songs by title or artist keyword                               //Ayesha Abbasi
 void search(const string& key) {                                                                                   
     if (!head) {  
@@ -226,7 +247,8 @@ void search(const string& key) {
 }
 
                                              
-void edit(const string& oldTitle) {           // Edits the title and artist of a specific song                  
+
+    void edit(const string& oldTitle) {           // Edits the title and artist of a specific song                  
     Song* t = head;  
 
     // Find the song with given title  
@@ -247,42 +269,24 @@ void edit(const string& oldTitle) {           // Edits the title and artist of a
 
     cout << "Updated." << endl;       // Confirmation message  
 }
-
-// Amna Kashif
-
-
-void shuffleSongs() {
-    vector<Song*> list;
-    Song* temp = head;
-
-    while (temp != NULL) {
-        list.push_back(temp);
-        temp = temp->next;
+    //Bareera Amjad
+void toggleFavorite(const string& title) {
+        Song* t = head;
+        while (t && t->title != title) t = t->next;
+        if (!t) {
+            cout << "Song not found." << endl;
+            return;
+        }
+        t->favorite = !t->favorite;
+        if (t->favorite) cout << "Added to favorites." << endl;
+        else cout << "Removed from favorites." << endl;
     }
 
-    srand(time(0));
-    for (int i = 0; i < list.size(); i++) {
-        int r = rand() % list.size();
-        swap(list[i]->title, list[r]->title);
-        swap(list[i]->artist, list[r]->artist);
-        swap(list[i]->favorite, list[r]->favorite);
-    }
-
-    cout << "Playlist shuffled!" << endl;
-}
-
-
-                               // Ayesha Abbasi
-                              // recently played songs 
     void showRecent() {
         recent.show();
     }
 
-
-
-
-//increment
-void setRepeatMode() {   //bareera amjad
+    void setRepeatMode() {   //bareera amjad
     int choice;
     cout << "Choose repeat mode:" << endl;
     cout << "1. Repeat One" << endl;
@@ -304,76 +308,6 @@ void setRepeatMode() {   //bareera amjad
         cout << "Repeat mode turned Off" << endl;
     }
 }
-
-
-// amna kashif
-// getName()
-    string getName() {
-        return name;
-    }
-    
-    // amna kashif
-    //  addSong()
-    void addSong(const string& title, const string& artist) {
-        Song* s = new Song(title, artist);
-        if (!head) head = tail = s;
-        else {
-            tail->next = s;
-            s->prev = tail;
-            tail = s;
-        }
-        cout << "Added: " << title << endl;
-    }
-// amna kashif 
-// delete song function
-void deleteSong(const string& title) {        // Start deleting a track from playlist
-        Song* t = head;                       // Begin from the first track
-        while (t && t->title != title)     
-            t = t->next;                      //Move to the next track
-
-        if (!t) {                             // ❗ Track not found in playlist
-            cout << "Song not found." << endl;
-            return;                         
-        }
-
-        if (t == head)                      
-            head = t->next;                   
-
-        if (t == tail)                        // 🎶 If the track is the last one
-            tail = t->prev;                   // 👈 Move playlist tail backward
-
-        if (t->prev)                          // 🔗 Connect previous track to next track
-            t->prev->next = t->next;
-
-        if (t->next)                          // 🔗 Connect next track to previous track
-            t->next->prev = t->prev;
-
-        if (t == current)                    
-            current = head;                   // 🔁 Restart from first track
-
-        delete t;                             
-        cout << "Song deleted." << endl;      // ✔️ Deletion complete
-}
-// amna kashif
- void showSongs(bool onlyFav = false) {
-        if (!head) {
-            cout << "Playlist is empty." << endl;
-            return;
-        }
-        cout << name << ":" << endl;
-        Song* t = head;
-        int i = 1;
-        while (t) {
-            if (!onlyFav || t->favorite) {
-                cout << i << ". " << t->title << " - " << t->artist;
-                if (t->favorite) cout << " (Fav)";
-                if (t == current) cout << " (Playing)";
-                cout << endl;
-            }
-            t = t->next;
-            i++;
-        }
-    }
 
 
 //muqaddisa 
@@ -432,9 +366,7 @@ public:
             cout << endl;
         }
     }
-};
-
-void createPlaylist() {
+    void createPlaylist() {
         string name;
         cout << "Enter new playlist name:" << endl;
         getline(cin, name);
@@ -466,6 +398,9 @@ void switchPlaylist() {
             cout << "Invalid selection." << endl;
         }
     }
+};
+
+
 
 int main() {
     PlaylistManager pm;
