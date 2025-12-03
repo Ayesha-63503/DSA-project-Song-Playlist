@@ -354,6 +354,28 @@ void deleteSong(const string& title) {        // Start deleting a track from pla
         delete t;                             
         cout << "Song deleted." << endl;      // ✔️ Deletion complete
 }
+// amna kashif
+ void showSongs(bool onlyFav = false) {
+        if (!head) {
+            cout << "Playlist is empty." << endl;
+            return;
+        }
+        cout << name << ":" << endl;
+        Song* t = head;
+        int i = 1;
+        while (t) {
+            if (!onlyFav || t->favorite) {
+                cout << i << ". " << t->title << " - " << t->artist;
+                if (t->favorite) cout << " (Fav)";
+                if (t == current) cout << " (Playing)";
+                cout << endl;
+            }
+            t = t->next;
+            i++;
+        }
+    }
+
+
 //muqaddisa 
 class PlaylistManager {
     vector<Playlist> playlists; // list of all playlists
@@ -569,26 +591,4 @@ int main() {
 
     return 0;
 }
-
-
-// amna kashif
- void showSongs(bool onlyFav = false) {
-        if (!head) {
-            cout << "Playlist is empty." << endl;
-            return;
-        }
-        cout << name << ":" << endl;
-        Song* t = head;
-        int i = 1;
-        while (t) {
-            if (!onlyFav || t->favorite) {
-                cout << i << ". " << t->title << " - " << t->artist;
-                if (t->favorite) cout << " (Fav)";
-                if (t == current) cout << " (Playing)";
-                cout << endl;
-            }
-            t = t->next;
-            i++;
-        }
-    }
 
