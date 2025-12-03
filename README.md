@@ -93,7 +93,7 @@ Traverse using next and prev pointers.
 
 Clone this repository
 
-git clone https://github.com/your-username/song-playlist-simulation.git
+git clone https://github.com/Ayesha-63503/Song-playlist-simulation.git
 
 
 Go to project directory
@@ -137,10 +137,6 @@ Menu-driven programs
 
 Basic simulation logic in C++
 
-🤝 Contributing
-
-Pull requests are welcome.
-If you'd like to add new features (shuffle, sorting, repeating), feel free to fork the project.
 
 📄 License
 
