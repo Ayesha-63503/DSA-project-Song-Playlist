@@ -152,7 +152,7 @@ void playSong() {                                                               
     cout << endl;
 
     simulatePlay(); // simulate playback animation
-    recent.addRecent(current->title, current->artist);                // add song to recent list
+    recent.add(current->title, current->artist);                // add song to recent list
 
     // Handle repeat and auto-next logic
     if (repeatMode == 1) playSong(); // repeat current
