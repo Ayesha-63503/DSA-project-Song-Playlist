@@ -4,7 +4,8 @@
 A Data Structures & Algorithms project that simulates a Music Playlist using a Doubly Linked List.
 This project allows users to add songs, delete songs, search songs, mark favorites, and navigate forward/backward just like a real playlist.
 
-🚀 Features
+🚀 Features:
+
 ✔ Add Song
 
 Insert a new song with title and artist into the playlist.
