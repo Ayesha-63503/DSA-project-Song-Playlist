@@ -89,6 +89,9 @@ public:
         head = tail = current = NULL;
         repeatMode = 0;
     }
+    string getName() {
+        return name;
+    }
     void addSong(const string& title, const string& artist) {
         Song* s = new Song(title, artist);
         if (!head) head = tail = s;
