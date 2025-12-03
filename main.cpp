@@ -1,14 +1,11 @@
 // DSA Project - Song Playlist 
-
 #include <iostream>
 #include <string>
 #include <vector>            // amna kashif
 #include <fstream>
 #include <cstdlib>                     //Ayesha Abbasi
 #include <ctime>
-
 // bareera amjad 
-
 using namespace std;
  struct Song {    //structutr  //Muqaddisa Rashid
     string title;
@@ -195,16 +192,7 @@ void edit(const string& oldTitle) {           // Edits the title and artist of a
     cout << "Updated." << endl;       // Confirmation message  
 }
 
-
 // Amna Kashif
-
-class Song {
-public:
-    string title;
-    string artist;
-    Song* next;
-    Song* prev;
-
 class Playlist {
     string name;
     Song* head;
@@ -399,3 +387,129 @@ public:
         }
     }
 };
+int main() {
+    PlaylistManager pm;
+    int choice = -1;
+
+    while (choice != 0) {
+        cout << "=========================" << endl;
+        cout << " MUSIC PLAYLIST SYSTEM" << endl;
+        cout << " Current Playlist: " << pm.current().getName() << endl;
+        cout << "1. Add Song" << endl;
+        cout << "2. Delete Song" << endl;
+        cout << "3. Display Songs" << endl;
+        cout << "4. Play Song" << endl;
+        cout << "5. Next / Previous" << endl;
+        cout << "6. Shuffle Songs" << endl;
+        cout << "7. Search / Edit Song" << endl;
+        cout << "8. Mark Favorite / Unfavorite" << endl;
+        cout << "9. Show Favorites" << endl;
+        cout << "10. Show Recently Played" << endl;
+        cout << "11. Repeat Mode" << endl;
+        cout << "12. Manage Playlists" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter choice:" << endl;
+
+        cin >> choice;
+        cin.ignore();
+
+        switch (choice) {
+            case 1: {
+                string t, a;
+                cout << "Enter title:" << endl;
+                getline(cin, t);
+                cout << "Enter artist:" << endl;
+                getline(cin, a);
+                pm.current().addSong(t, a);
+                break;
+            }
+            case 2: {
+                string t;
+                cout << "Enter title to delete:" << endl;
+                getline(cin, t);
+                pm.current().deleteSong(t);
+                break;
+            }
+            case 3:
+                pm.current().showSongs(false);
+                break;
+
+            case 4:
+                pm.current().playSong();
+                break;
+
+            case 5: {
+                cout << "1. Next  2. Previous" << endl;
+                int c;
+                cin >> c;
+                cin.ignore();
+                if (c == 1) pm.current().nextSong();
+                else pm.current().prevSong();
+                break;
+            }
+            case 6:
+                pm.current().shuffleSongs();
+                break;
+
+            case 7: {
+                cout << "1. Search  2. Edit" << endl;
+                int c;
+                cin >> c;
+                cin.ignore();
+                if (c == 1) {
+                    string k;
+                    cout << "Enter keyword:" << endl;
+                    getline(cin, k);
+                    pm.current().search(k);
+                } else {
+                    string k;
+                    cout << "Enter title to edit:" << endl;
+                    getline(cin, k);
+                    pm.current().edit(k);
+                }
+                break;
+            }
+
+            case 8: {
+                string t;
+                cout << "Enter title:" << endl;
+                getline(cin, t);
+                pm.current().toggleFavorite(t);
+                break;
+            }
+
+            case 9:
+                pm.current().showSongs(true);
+                break;
+
+            case 10:
+                pm.current().showRecent();
+                break;
+
+            case 11:
+                pm.current().setRepeatMode();
+                break;
+
+            case 12: {
+                cout << "1. New Playlist  2. Switch Playlist" << endl;
+                int c;
+                cin >> c;
+                cin.ignore();
+                if (c == 1) pm.createPlaylist();
+                else pm.switchPlaylist();
+                break;
+            }
+
+            case 0:
+                cout << "Goodbye!" << endl;
+                break;
+
+            default:
+                cout << "Invalid choice." << endl;
+        }
+    }
+
+    return 0;
+}
+
+
