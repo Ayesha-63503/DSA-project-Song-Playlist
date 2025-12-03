@@ -308,7 +308,7 @@ void toggleFavorite(const string& title) {
         cout << "Repeat mode turned Off" << endl;
     }
 }
-
+};
 
 //muqaddisa 
 class PlaylistManager {
