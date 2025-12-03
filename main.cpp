@@ -24,6 +24,7 @@ using namespace std;
         prev = NULL;
     }
 };
+//bareera amjad
 class RecentlyPlayed {
     Song* head;
     int count;
@@ -71,6 +72,61 @@ public:
         }
     }
 };
+class Playlist {
+    string name;
+    Song* head;
+    Song* tail;
+    Song* current;
+    int repeatMode; // 0 = Off, 1 = Repeat One, 2 = Repeat All
+    RecentlyPlayed recent;
+public:
+     //constructor
+    Playlist(string n = "My Playlist") {
+        name = n;
+        head = tail = current = NULL;
+        repeatMode = 0;
+    }
+    void addSong(const string& title, const string& artist) {
+        Song* s = new Song(title, artist);
+        if (!head) head = tail = s;
+        else {
+            tail->next = s;
+            s->prev = tail;
+            tail = s;
+        }
+        cout << "Added: " << title << endl;
+    }
+// amna kashif 
+// delete song function
+void deleteSong(const string& title) {        // Start deleting a track from playlist
+        Song* t = head;                       // Begin from the first track
+        while (t && t->title != title)     
+            t = t->next;                      //Move to the next track
+
+        if (!t) {                             // ❗ Track not found in playlist
+            cout << "Song not found." << endl;
+            return;                         
+        }
+
+        if (t == head)                      
+            head = t->next;                   
+
+        if (t == tail)                        // 🎶 If the track is the last one
+            tail = t->prev;                   // 👈 Move playlist tail backward
+
+        if (t->prev)                          // 🔗 Connect previous track to next track
+            t->prev->next = t->next;
+
+        if (t->next)                          // 🔗 Connect next track to previous track
+            t->next->prev = t->prev;
+
+        if (t == current)                    
+            current = head;                   // 🔁 Restart from first track
+
+        delete t;                             
+        cout << "Song deleted." << endl;      // ✔️ Deletion complete
+}
+
 
 //Bareera Amjad
 void toggleFavorite(const string& title) {
@@ -193,20 +249,6 @@ void edit(const string& oldTitle) {           // Edits the title and artist of a
 }
 
 // Amna Kashif
-class Playlist {
-    string name;
-    Song* head;
-    Song* tail;
-    Song* current;
-    int repeatMode; // 0 = Off, 1 = Repeat One, 2 = Repeat All
-    RecentlyPlayed recent;
-public:
-     //constructor
-    Playlist(string n = "My Playlist") {
-        name = n;
-        head = tail = current = NULL;
-        repeatMode = 0;
-    }
 
 
 void shuffleSongs() {
@@ -251,6 +293,7 @@ void setRepeatMode() {   //bareera amjad
         cout << "Repeat mode turned Off" << endl;
     }
 }
+
 
 // amna kashif
 // getName()
@@ -318,40 +361,10 @@ public:
     }
 
     // Create a new playlist
-    void createPlaylist() {
-        string name;
-        cout << "Enter new playlist name:" << endl;
-        getline(cin, name);
-        playlists.push_back(Playlist(name));
-        currentIndex = playlists.size() - 1; // switch to new playlist
-        cout << "Created and switched to: " << name << endl;
-    }
+    
 
     //Switch to existing playlist 
-    void switchPlaylist() {
-        if (playlists.empty()) {
-            cout << "No playlists available." << endl;
-            return;
-        }
-
-        cout << "Available Playlists:" << endl;
-        for (int i = 0; i < playlists.size(); i++) {
-            cout << (i + 1) << ". " << playlists[i].getName() << endl;
-        }
-
-        int choice;
-        cout << "Enter playlist number to switch:" << endl;
-        cin >> choice;
-        cin.ignore();
-
-        if (choice >= 1 && choice <= playlists.size()) {
-            currentIndex = choice - 1;
-            cout << "Switched to playlist: " << playlists[currentIndex].getName() << endl;
-        } else {
-            cout << "Invalid selection." << endl;
-        }
-    }
-
+    
     //  Delete a playlist 
     void deletePlaylist() {
         if (playlists.size() <= 1) {
@@ -387,6 +400,39 @@ public:
         }
     }
 };
+void createPlaylist() {
+        string name;
+        cout << "Enter new playlist name:" << endl;
+        getline(cin, name);
+        playlists.push_back(Playlist(name));
+        currentIndex = playlists.size() - 1; // switch to new playlist
+        cout << "Created and switched to: " << name << endl;
+    }
+    
+void switchPlaylist() {
+        if (playlists.empty()) {
+            cout << "No playlists available." << endl;
+            return;
+        }
+
+        cout << "Available Playlists:" << endl;
+        for (int i = 0; i < playlists.size(); i++) {
+            cout << (i + 1) << ". " << playlists[i].getName() << endl;
+        }
+
+        int choice;
+        cout << "Enter playlist number to switch:" << endl;
+        cin >> choice;
+        cin.ignore();
+
+        if (choice >= 1 && choice <= playlists.size()) {
+            currentIndex = choice - 1;
+            cout << "Switched to playlist: " << playlists[currentIndex].getName() << endl;
+        } else {
+            cout << "Invalid selection." << endl;
+        }
+    }
+
 int main() {
     PlaylistManager pm;
     int choice = -1;
