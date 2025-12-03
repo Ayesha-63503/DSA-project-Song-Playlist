@@ -270,6 +270,17 @@ void shuffleSongs() {
 
     cout << "Playlist shuffled!" << endl;
 }
+
+
+                               // Ayesha Abbasi
+                              // recently played songs 
+    void showRecent() {
+        recent.show();
+    }
+
+
+
+
 //increment
 void setRepeatMode() {   //bareera amjad
     int choice;
@@ -400,6 +411,7 @@ public:
         }
     }
 };
+
 void createPlaylist() {
         string name;
         cout << "Enter new playlist name:" << endl;
@@ -558,4 +570,25 @@ int main() {
     return 0;
 }
 
+
+// amna kashif
+ void showSongs(bool onlyFav = false) {
+        if (!head) {
+            cout << "Playlist is empty." << endl;
+            return;
+        }
+        cout << name << ":" << endl;
+        Song* t = head;
+        int i = 1;
+        while (t) {
+            if (!onlyFav || t->favorite) {
+                cout << i << ". " << t->title << " - " << t->artist;
+                if (t->favorite) cout << " (Fav)";
+                if (t == current) cout << " (Playing)";
+                cout << endl;
+            }
+            t = t->next;
+            i++;
+        }
+    }
 
