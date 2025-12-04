@@ -93,3 +93,74 @@ public:
     string getName() {
         return name;
     }
+void addSong(const string& title, const string& artist) {
+        Song* s = new Song(title, artist);
+        if (!head) head = tail = s;
+        else {
+            tail->next = s;
+            s->prev = tail;
+            tail = s;
+        }
+        cout << "Added: " << title << endl;
+    }
+
+    void deleteSong(const string& title) {
+        Song* t = head;
+        while (t && t->title != title)
+            t = t->next;
+
+        if (!t) {
+            cout << "Song not found." << endl;
+            return;
+        }
+
+        if (t == head)
+            head = t->next;
+
+        if (t == tail)
+            tail = t->prev;
+
+        if (t->prev)
+            t->prev->next = t->next;
+
+        if (t->next)
+            t->next->prev = t->prev;
+
+        if (t == current)
+            current = head;
+
+        delete t;
+        cout << "Song deleted." << endl;
+    }
+
+    void simulatePlay() {
+        cout << "Playing ";
+        for (int i = 0; i < 10; i++) {
+            cout << "? ";
+            cout.flush();
+            this_thread::sleep_for(chrono::milliseconds(200));
+        }
+        cout << endl;
+    }
+
+    void playSong() {
+        if (!head) { cout << "No songs!\n"; return; }
+        if (!current) current = head;
+
+        cout << "\nNow Playing: " << current->title << " - " << current->artist << endl;
+
+        simulatePlay();
+        recent.add(current->title, current->artist);
+
+        if (repeatMode == 1) playSong();
+        else if (current->next) current = current->next;
+        else if (repeatMode == 2) current = head;
+    }
+
+    void nextSong() {
+        if (!head) return;
+        if (!current) current = head;
+        if (current->next) current = current->next;
+        else { cout << "End of playlist!\n"; return; }
+        playSong();
+    }
