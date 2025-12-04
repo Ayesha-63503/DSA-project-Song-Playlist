@@ -434,4 +434,29 @@ int main() {
                 cout << "Enter title:" << endl; getline(cin, t);
                 pm.current().toggleFavorite(t);
                 break;
+            } 
+             case 9:
+                pm.current().showSongs(true);
+                break;
+            case 10:
+                pm.current().showRecent();
+                break;
+            case 11:
+                pm.current().setRepeatMode();
+                break;
+            case 12: {
+                cout << "1. New Playlist  2. Switch Playlist" << endl;
+                int c; cin >> c; cin.ignore();
+                if (c == 1) pm.createPlaylist(); else pm.switchPlaylist();
+                break;
             }
+            case 0:
+                cout << "Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice." << endl;
+        }
+    }
+
+    return 0;
+}
