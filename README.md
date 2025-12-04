@@ -93,7 +93,7 @@ Traverse using next and prev pointers.
 
 Clone this repository
 
-git clone https://github.com/Ayesha-63503/dsa-project-Song-Playlist.git
+git clone https://github.com/Ayesha-63503/DSA-project-Song-Playlist.git
 
 
 Go to project directory
