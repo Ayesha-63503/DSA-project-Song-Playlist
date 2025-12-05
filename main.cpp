@@ -10,6 +10,7 @@
 
 using namespace std;        // bareera amjad 
 
+//Structure of Song
 
 struct Song {     //Muqaddisa Rashid
     string title;
@@ -37,6 +38,7 @@ public:
         head = NULL;
         count = 0;
     }
+//add fuction to add new songs
 
     void add(const string& title, const string& artist) {
         Song* s = new Song(title, artist);
@@ -58,7 +60,7 @@ public:
             count = 5;
         }
     }
-
+//shows recently played songs 
     void show() {
         if (!head) {
             cout << "No songs played recently." << endl;
@@ -75,6 +77,8 @@ public:
     }
 };
 
+//playlist class to make multiple playlist
+
 class Playlist {
     string name;
     Song* head;
@@ -90,10 +94,10 @@ public:
         repeatMode = 0;
     }
 
-    string getName() {
+    string getName() { //gets the name of playlist user have named
         return name;
     }
-void addSong(const string& title, const string& artist) {
+void addSong(const string& title, const string& artist) {                 //add function for songs
         Song* s = new Song(title, artist);
         if (!head) head = tail = s;
         else {
@@ -103,10 +107,10 @@ void addSong(const string& title, const string& artist) {
         }
         cout << "Added: " << title << endl;
     }
-
+             //delete song function
     void deleteSong(const string& title) {
-        Song* t = head;
-        while (t && t->title != title)
+        Song* t = head;                         
+        while (t && t->title != title)                     //songs will be deleted based on the title found  
             t = t->next;
 
         if (!t) {
@@ -115,15 +119,15 @@ void addSong(const string& title, const string& artist) {
         }
 
         if (t == head)
-            head = t->next;
+            head = t->next;                //if the desired  deleted node is head node
 
         if (t == tail)
-            tail = t->prev;
+            tail = t->prev;                  //if the desired delted node is on end 
 
         if (t->prev)
-            t->prev->next = t->next;
+            t->prev->next = t->next;           
 
-        if (t->next)
+        if (t->next)                      //deletion from middle
             t->next->prev = t->prev;
 
         if (t == current)
@@ -132,7 +136,7 @@ void addSong(const string& title, const string& artist) {
         delete t;
         cout << "Song deleted." << endl;
     }
-
+                            //shows a simlulation of searching ....
     void simulatePlay() {
         cout << "Playing ";
         for (int i = 0; i < 10; i++) {
@@ -142,7 +146,7 @@ void addSong(const string& title, const string& artist) {
         }
         cout << endl;
     }
-
+                         //function for playing songs
     void playSong() {
         if (!head) { cout << "No songs!\n"; return; }
         if (!current) current = head;
@@ -156,7 +160,7 @@ void addSong(const string& title, const string& artist) {
         else if (current->next) current = current->next;
         else if (repeatMode == 2) current = head;
     }
-
+                        //playing the next song
     void nextSong() {
         if (!head) return;
         if (!current) current = head;
@@ -164,7 +168,7 @@ void addSong(const string& title, const string& artist) {
         else { cout << "End of playlist!\n"; return; }
         playSong();
     }
- void prevSong() {
+ void prevSong() {                     //  playing previous songs
         if (!head) return;
         if (!current) current = head;
         if (current->prev) current = current->prev;
@@ -172,7 +176,7 @@ void addSong(const string& title, const string& artist) {
         playSong();
     }
 
-    void showSongs(bool onlyFav = false) {
+    void showSongs(bool onlyFav = false) {            //shows whats inside a playlist
         if (!head) {
             cout << "Playlist is empty." << endl;
             return;
@@ -181,7 +185,7 @@ void addSong(const string& title, const string& artist) {
         Song* t = head;
         int i = 1;
         while (t) {
-            if (!onlyFav || t->favorite) {
+            if (!onlyFav || t->favorite) {               // playlist would be marked favorite or playing based on user input
                 cout << i << ". " << t->title << " - " << t->artist;
                 if (t->favorite) cout << " (Fav)";
                 if (t == current) cout << " (Playing)";
@@ -191,7 +195,7 @@ void addSong(const string& title, const string& artist) {
             i++;
         }
     }
-
+            //shuffles songs for new combination ina playlist
     void shuffleSongs() {
         vector<Song*> arr;
         for (Song* t = head; t; t = t->next) arr.push_back(t);
@@ -209,12 +213,12 @@ void addSong(const string& title, const string& artist) {
         cout << "Playlist shuffled." << endl;
     }
 
-    void search(const string& key) {
+    void search(const string& key) {                   //searches for the song based on keyword user enters
         if (!head) {
             cout << "Playlist is empty." << endl;
             return;
         }
-
+                                                              
         Song* t = head;
         bool found = false;
 
@@ -229,7 +233,7 @@ void addSong(const string& title, const string& artist) {
         if (!found) cout << "No matches found." << endl;
     }
 
-    void edit(const string& oldTitle) {
+    void edit(const string& oldTitle) {                       // editing any previous songtitle
         Song* t = head;
         while (t && t->title != oldTitle) t = t->next;
 
@@ -283,7 +287,7 @@ void addSong(const string& title, const string& artist) {
         cout << endl;
     }
 };
-
+                             //playlist manager class to updated any song or lists
 class PlaylistManager {
     vector<Playlist> playlists;
     int currentIndex;
@@ -296,7 +300,7 @@ public:
 
     Playlist& current() { return playlists[currentIndex]; }
 
-    void deletePlaylist() {
+    void deletePlaylist() {                           //  delete function for playlistmanager
         if (playlists.size() <= 1) {
             cout << "Cannot delete the only playlist." << endl;
             return;
@@ -318,7 +322,7 @@ public:
         else cout << "Invalid selection." << endl;
     }
 
-    void showAllPlaylists() {
+    void showAllPlaylists() {               //to display all playlist
         cout << "All Playlists:" << endl;
         for (int i = 0; i < playlists.size(); i++) {
             cout << (i + 1) << ". " << playlists[i].getName();
@@ -327,7 +331,7 @@ public:
         }
     }
 
-    void createPlaylist() {
+    void createPlaylist() {                //creating new playlists
         string name;
         cout << "Enter new playlist name:" << endl;
         getline(cin, name);
@@ -336,7 +340,7 @@ public:
         cout << "Created and switched to: " << name << endl;
     }
 
-    void switchPlaylist() {
+    void switchPlaylist() {                          //switching one to other playlists
         if (playlists.empty()) {
             cout << "No playlists available." << endl;
             return;
